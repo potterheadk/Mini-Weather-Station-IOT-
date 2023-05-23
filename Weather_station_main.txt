@@ -1,0 +1,227 @@
+/* this program works  fantastic  so all you need to do copy ip address that you got
+Paste it to(#define  I2C_ADDR 0x27) in the code  at place of  0x27    */
+
+#include <Esplora.h>
+#include <DHT.h>
+#include <Wire.h> 
+#include <LCD.h>
+#include <LiquidCrystal_I2C.h> 
+#include "Wire.h"
+
+
+#define DHTPIN A0    
+#define DHTTYPE DHT11  
+
+DHT dht(DHTPIN, DHTTYPE);
+
+#define buzz1 7
+#define buzz2 6
+#define ledgreen 10
+#define ledblue 9
+#define ledred 11
+#define  I2C_ADDR 0x27
+#define BACKLIGHT_PIN 3
+#define En_pin 2
+#define Rw_pin 1
+#define Rs_pin 0
+#define D4_pin 4
+#define D5_pin 5
+#define D6_pin 6
+#define D7_pin 7
+LiquidCrystal_I2C lcd(I2C_ADDR,En_pin,Rw_pin,Rs_pin,D4_pin,D5_pin,D6_pin,D7_pin);
+
+//Variables
+int chk;
+float hum;  //Stores humidity value
+float temp; //Stores temperature value
+
+const int digital_rain = 4;
+const int analog_rain= A1;
+int i;
+int val_analogique;
+void setup()
+{
+ 
+  dht.begin();
+  lcd.begin(16,2);
+  pinMode(buzz1, OUTPUT);
+  pinMode(buzz2, OUTPUT);
+  pinMode(ledgreen, OUTPUT);
+  pinMode(ledblue, OUTPUT);
+  pinMode(ledred, OUTPUT);
+  digitalWrite(DHTPIN, INPUT);
+  pinMode(digital_rain, INPUT);
+  pinMode(analog_rain, INPUT);
+  lcd.setBacklightPin(BACKLIGHT_PIN,POSITIVE);
+  lcd.setBacklight(HIGH);
+  Serial.begin(9600);
+   lcd.setCursor(15, 0);
+   lcd.leftToRight();
+   for (i=0; i<15; i++)
+  {
+   lcd.setCursor(1, 0);
+ 
+    lcd.print("WELCOME TO OUR");
+   lcd.setCursor(15-i, 1);
+    lcd.print("weather station");
+    delay(200);
+   
+    
+  }
+  delay(1000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Initiallizing");
+  lcd.setCursor(1,1);
+  lcd.print("System...");
+ 
+  delay(2000);
+
+  lcd.blink();
+  lcd.clear();
+  lcd.leftToRight();
+  lcd.print("Howdy");
+   lcd.setCursor(2,1);
+  lcd.print("Let's begin...");
+  delay(2000);
+
+
+}
+
+void loop()
+{
+ 
+
+delay(1000);
+
+
+
+  hum = dht.readHumidity();
+  temp = dht.readTemperature();
+  Serial.print("Humidity: ");
+  Serial.print(hum);
+  Serial.print(" %, Temp: ");
+  Serial.print(temp);
+  Serial.println("Celsius");
+delay(200);
+if(hum>=78)
+{
+  lcd.clear();
+  lcd.blink();
+ 
+  lcd.setCursor(3,0);
+  lcd.print("Raining");
+  lcd.setCursor(3,1);
+  lcd.print("posibility");
+ delay(2000);
+
+
+}
+else{
+  lcd.clear();
+}
+if(temp>30)
+{
+  lcd.clear();
+  lcd.blink();
+  lcd.setCursor(3,0);
+  lcd.print("It's Hot ");
+  lcd.setCursor(3,1);
+  lcd.print("Temperature");
+ delay(2000);
+
+
+}
+else{
+  lcd.clear();
+}  
+if(temp<=30)
+{
+  lcd.clear();
+  lcd.blink();
+ 
+  lcd.setCursor(3,0);
+  lcd.print("It's Cold ");
+  lcd.setCursor(3,1);
+  lcd.print("Temperature");
+ delay(2000);
+
+
+}
+else{
+  lcd.clear();
+} 
+  lcd.clear();
+  lcd.blink();
+  lcd.setCursor(0,0);
+  lcd.print("Temp: ");
+  lcd.print(temp);
+  lcd.print(" ");
+  lcd.print((char)223);
+  lcd.print("C");
+  lcd.setCursor(0,1);
+  lcd.print("Hum:  ");
+  lcd.print(hum);
+  lcd.print(" %");
+  
+delay(5000);
+
+  int xAxis = Esplora.readAccelerometer(X_AXIS);    // read the X axis
+  int yAxis = Esplora.readAccelerometer(Y_AXIS);    // read the Y axis
+  int zAxis = Esplora.readAccelerometer(Z_AXIS);    // read the Z axis
+  
+  Serial.print("x: ");      // print the label for X
+  Serial.print(xAxis);      // print the value for the X axis
+  Serial.print("\ty: ");    // print a tab character, then the label for Y
+  Serial.print(yAxis);      // print the value for the Y axis
+  Serial.print("\tz: ");    // print a tab character, then the label for Z
+  Serial.println(zAxis);    // print the value for the Z axis
+  delay(20);
+    if(xAxis>702| yAxis>525| zAxis>440)
+    {
+      lcd.clear();
+      lcd.blink();
+      lcd.setCursor(0,0);
+      lcd.print("ALERT!!!!");
+      lcd.setCursor(0,1);
+      lcd.print("EARTHQUAKE ");
+      digitalWrite(buzz1, HIGH);
+      digitalWrite(ledred, HIGH);
+      digitalWrite(ledgreen, LOW);
+      delay(3000);
+      
+    }
+    else
+    {
+      digitalWrite(buzz1, LOW);
+      digitalWrite(ledred, LOW);
+      digitalWrite(ledgreen, HIGH);
+    }
+    
+ val_analogique=analogRead(analog_rain); 
+ Serial.print("Analog value : ");
+ Serial.println(val_analogique); 
+ Serial.println("");
+  delay(200);
+
+  if(digitalRead(digital_rain) == LOW) 
+  {
+    Serial.println("Digital value : wet"); 
+    lcd.clear();
+    lcd.blink();
+    lcd.setCursor(0,0);
+    lcd.print("!!CAUTION!!");
+    lcd.setCursor(3,1);
+    lcd.print("It's raining...");
+    digitalWrite(buzz2, HIGH);
+    digitalWrite(ledblue, HIGH);
+    digitalWrite(ledgreen, LOW);
+    delay(7000); 
+  }
+  
+else{
+  digitalWrite(buzz2, LOW);
+  digitalWrite(ledblue, LOW);
+  digitalWrite(ledgreen, HIGH);
+  }
+}
