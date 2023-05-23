@@ -1,0 +1,28 @@
+Connection to arduino are as follows :--
+
+Dht sensor   :-
+A0 = A0 (of arduino)
+Vcc = 5V
+GND = GND
+
+Rain detector sensor :--
+A0 = A1(of arduino)
+D0 = pin 4
+VCC = 5V
+GND = GND
+
+Lcd (16 x 2) :-
+SDA = A4
+SCL = A5
+VCC = 5V
+GND = GND
+
+Led all (red , green, blue) :-
+Led red positive = 11
+Led green positive = 10
+Led  green positive = 9
+All led Negative pins at GND of arduino
+
+For buzzer  :-
+Positive pin of both buzzer at separate p.t = 7 and 6
+Negative pin to GND of arduino
