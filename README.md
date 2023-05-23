@@ -18,4 +18,8 @@ in my case I2C_ADDR 0x27.you might have same but always look first.  :)
 
 --------------------------------------------------------------------------------------------------------------------
 
-4) You are good to go i will provide a scymetic for connections .
+4) You are good to go i will provide a scymetic for connections . 
+
+--------------------------------------------------------------------------------------------------------------------
+
+A tip before compiling and running the code Read it first try to understand it :)
