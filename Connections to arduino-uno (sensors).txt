@@ -23,7 +23,7 @@ Led green positive = 10
 Led  green positive = 9
 All led Negative pins at GND of arduino
 
-A tip : Always use 1 ohm registors for LED's as direct supply can cause damage.
+A tip : Always use less than 300 ohm registors for LED's as direct supply can cause damage.
 
 For buzzer  :-
 Positive pin of both buzzer at separate p.t = 7 and 6
