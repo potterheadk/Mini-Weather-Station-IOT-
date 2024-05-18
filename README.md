@@ -1,8 +1,8 @@
-# Weather-Forcasting-mini-Station-IOT-
+# Mini-Weather-Station-IOT
 ## youtube Link (actually this was my first project when i was in school so do mind :) 
 https://youtu.be/OG_uS872wCM?si=l9MtvBpjS_IgOma8
 
-This is mini Project on how to use multiple sensors with arduino (Weather forcasting station miniv) 
+This is mini Project on how to use multiple sensors with arduino (Mini Weather Station) 
 
 1) you need I2c Library and DHT Library you can find it on internet ( but be carefull while installing i2c library it might not detect your i2c module ) 
    so try different types of i2c library.
