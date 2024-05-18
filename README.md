@@ -1,5 +1,5 @@
 # Mini-Weather-Station-IOT
-## youtube Link (actually this was my first project when i was in school so do mind :) 
+## youtube Link (actually this was my first project when i was in school so don't mind :) 
 https://youtu.be/OG_uS872wCM?si=l9MtvBpjS_IgOma8
 
 This is mini Project on how to use multiple sensors with arduino (Mini Weather Station) 
